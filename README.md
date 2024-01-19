@@ -1,8 +1,11 @@
 ### Minecraft Client XRay
 
-[![](https://img.shields.io/badge/JDK-8+-green?logo=Jdk)](https://gradle.org)
 [![](https://img.shields.io/badge/Gradle-v8%2E5-g?logo=Gradle)](https://gradle.org)
-[![](https://img.shields.io/badge/QQ群-929450805-blue?logo=Tencent%20QQ)](https://qm.qq.com/cgi-bin/qm/qr?k=M8BRtN-w29gUFbp83PHOOoHDmNga4miz&jump_from=webapi)
+[![](https://img.shields.io/badge/Zulu%20JDK-8-green)](https://www.azul.com/)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ideal-state/minecraft-forge-xray)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ideal-state/minecraft-forge-xray/gradle-release.yml)
+![GitHub Release](https://img.shields.io/github/v/release/ideal-state/minecraft-forge-xray)
+![Discord](https://img.shields.io/discord/1191122625389396098)
 
 ------------------------------------------------------
 
