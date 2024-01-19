@@ -1,11 +1,12 @@
-### Minecraft Client XRay
+# Minecraft Client XRay
 
-[![](https://img.shields.io/badge/Gradle-v8%2E5-g?logo=Gradle)](https://gradle.org)
-[![](https://img.shields.io/badge/Zulu%20JDK-8-green)](https://www.azul.com/)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ideal-state/minecraft-forge-xray)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ideal-state/minecraft-forge-xray/gradle-release.yml)
-![GitHub Release](https://img.shields.io/github/v/release/ideal-state/minecraft-forge-xray)
-![Discord](https://img.shields.io/discord/1191122625389396098)
+![Gradle](https://img.shields.io/badge/Gradle-v8%2E5-g?logo=gradle&style=flat-square&link=https://gradle.org)
+![Zulu JDK](https://img.shields.io/badge/Zulu%20JDK-8-blue?style=flat-square&link=https://www.azul.com/)
+![GitHub License](https://img.shields.io/github/license/ideal-state/minecraft-forge-xray?style=flat-square&link=.%2FLICENSE)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ideal-state/minecraft-forge-xray?style=flat-square&logo=github)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ideal-state/minecraft-forge-xray/gradle-release.yml?style=flat-square)
+![GitHub Release](https://img.shields.io/github/v/release/ideal-state/minecraft-forge-xray?style=flat-square&link=https://github.com/ideal-state/minecraft-forge-xray/releases)
+![Discord](https://img.shields.io/discord/1191122625389396098?style=flat-square&logo=discord)
 
 ------------------------------------------------------
 
