@@ -1,0 +1,16 @@
+#PARSE_ESCAPES
+category.xray=XRay
+
+keybinding.xray.enable=Enable XRay
+keybinding.xray.configure=Configure XRay
+
+tip.xray.enabled=§aXRay is enabled
+tip.xray.disabled=§cXRay is disabled
+
+gui.xray.options.title=§lXRay Options
+gui.xray.blocks.title=§a§lBlocks
+gui.xray.blocks.sub_title=§a§ndouble click an item to add it to Excludes
+gui.xray.excludes.title=§c§lExcludes
+gui.xray.excludes.sub_title=§c§ndouble click an item to remove it from this list
+
+unknown=unknown
