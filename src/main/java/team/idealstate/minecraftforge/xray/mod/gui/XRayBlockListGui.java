@@ -24,6 +24,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import team.idealstate.minecraftforge.xray.common.gui.AbstractGuiScreen;
 
@@ -54,11 +57,25 @@ public class XRayBlockListGui extends GuiScrollingList {
     private final Deque<ElementFilter> includeElementFilters = new ArrayDeque<>();
     private final Deque<ElementFilter> excludeElementFilters = new ArrayDeque<>();
 
+    private final int width;
+    private final int height;
+    private final int top;
+    private final int bottom;
+    private final int left;
+    private final int right;
+
     public XRayBlockListGui(AbstractGuiScreen parent, String title, String subTitle, Collection<String> blockIdentifiers, int width, int left) {
         super(parent.mc, width, parent.height - 32 - 32 - 16, 32, parent.height - 32 - 16, left, 20);
         this.parent = parent;
         this.title = title;
         this.subTitle = subTitle;
+
+        this.width = width;
+        this.height = parent.height - 32 - 32 - 16;
+        this.top = 32;
+        this.bottom = this.top + this.height;
+        this.left = left;
+        this.right = this.left + this.width;
 
         try {
             this.scrollDistanceField = GuiScrollingList.class.getDeclaredField("scrollDistance");
@@ -103,13 +120,6 @@ public class XRayBlockListGui extends GuiScrollingList {
         return false;
     }
 
-    public String getElement(int index) {
-        if (isOperable(index)) {
-            return blockIdentifiers.get(index);
-        }
-        return null;
-    }
-
     public List<String> getElements() {
         return getElements(blockIdentifiers);
     }
@@ -125,6 +135,28 @@ public class XRayBlockListGui extends GuiScrollingList {
         return ret;
     }
 
+    public boolean isOperable(int index) {
+        return index > 0 && index < blockIdentifiers.size();
+    }
+
+    public String getElement(int index) {
+        if (isOperable(index)) {
+            return blockIdentifiers.get(index);
+        }
+        return null;
+    }
+
+    public boolean isOperableView(int index) {
+        return index > 0 && index < blocksView.size();
+    }
+
+    public String getElementView(int index) {
+        if (isOperableView(index)) {
+            return blocksView.get(index).getKey();
+        }
+        return null;
+    }
+
     public void addElementListener(ElementListener elementListener) {
         this.elementListeners.add(elementListener);
     }
@@ -132,6 +164,7 @@ public class XRayBlockListGui extends GuiScrollingList {
     public void addIncludeElementFilters(ElementFilter elementFilter) {
         this.includeElementFilters.add(elementFilter);
     }
+
     public void addExcludeElementFilters(ElementFilter elementFilter) {
         this.excludeElementFilters.add(elementFilter);
     }
@@ -142,10 +175,6 @@ public class XRayBlockListGui extends GuiScrollingList {
         if (isSelected(selectedIndex)) {
             elementListeners.forEach(elementListener -> elementListener.onClick(this, index, doubleClick));
         }
-    }
-
-    public boolean isOperable(int index) {
-        return index > 0 && index < blockIdentifiers.size();
     }
 
     @Override
@@ -171,9 +200,10 @@ public class XRayBlockListGui extends GuiScrollingList {
 
     }
 
+    private static Map<String, String> nameCaches;
+
     private void updateBlocksView() {
         blocksView.clear();
-        String blockName;
         boolean first = true;
         for (String blockIdentifier : blockIdentifiers) {
             if (first) {
@@ -182,13 +212,27 @@ public class XRayBlockListGui extends GuiScrollingList {
                 continue;
             }
             Block block = (Block) Block.blockRegistry.getObject(blockIdentifier);
+            String blockName = null;
             if (block == null) {
                 blockName = unknown;
             } else {
-                if (block.getMaterial()  == Material.air) {
+                if (block.getMaterial() == Material.air) {
                     continue;
                 }
-                blockName = block.getLocalizedName();
+                if (nameCaches == null) {
+                    nameCaches = new HashMap<>(blockIdentifiers.size());
+                } else {
+                    blockName = nameCaches.get(blockIdentifier);
+                }
+                if (blockName == null) {
+                    Item item = Item.getItemFromBlock(block);
+                    if (item == null) {
+                        blockName = unknown;
+                    } else {
+                        blockName = new ItemStack(item).getDisplayName();
+                    }
+                    nameCaches.put(blockIdentifier, blockName);
+                }
             }
             boolean visiable = includeElementFilters.isEmpty();
             for (ElementFilter elementFilter : includeElementFilters) {
@@ -251,6 +295,30 @@ public class XRayBlockListGui extends GuiScrollingList {
 
     public String getSubTitle() {
         return subTitle;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getTop() {
+        return top;
+    }
+
+    public int getBottom() {
+        return bottom;
+    }
+
+    public int getLeft() {
+        return left;
+    }
+
+    public int getRight() {
+        return right;
     }
 
     @FunctionalInterface
