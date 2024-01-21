@@ -54,6 +54,8 @@ public final class EnableXRay extends RunnableKeyBinding {
         super("enable", Keyboard.KEY_X, "xray");
     }
 
+    private int ambientOcclusion = 0;
+
     @Override
     protected void doRun() {
         Minecraft minecraft = Minecraft.getMinecraft();
@@ -61,10 +63,13 @@ public final class EnableXRay extends RunnableKeyBinding {
         EntityClientPlayerMP player = minecraft.thePlayer;
         String tip;
         if (enabled.get()) {
+            minecraft.gameSettings.ambientOcclusion = ambientOcclusion;
             enabled.set(false);
             tip = "tip.xray.disabled";
         } else {
             enabled.set(true);
+            ambientOcclusion = minecraft.gameSettings.ambientOcclusion;
+            minecraft.gameSettings.ambientOcclusion = 0;
             tip = "tip.xray.enabled";
         }
         player.addChatComponentMessage(new ChatComponentTranslation(tip));

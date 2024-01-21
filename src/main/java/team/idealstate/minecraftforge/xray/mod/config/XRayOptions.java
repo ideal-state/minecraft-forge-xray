@@ -76,8 +76,9 @@ public final class XRayOptions {
             if (is == null) {
                 return;
             }
-            try (InputStream inputStream = is) {
-                Files.copy(inputStream, configFile.toPath());
+            try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is))) {
+                this.excludeBlockIdentifiers = bufferedReader.lines().collect(Collectors.toSet());
+                Files.write(configFile.toPath(), excludeBlockIdentifiers);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -133,5 +134,9 @@ public final class XRayOptions {
         } finally {
             lock.unlock();
         }
+    }
+
+    public int getDistance() {
+        return Minecraft.getMinecraft().gameSettings.renderDistanceChunks * 8;
     }
 }

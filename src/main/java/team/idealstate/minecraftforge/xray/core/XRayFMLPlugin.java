@@ -46,6 +46,7 @@ public class XRayFMLPlugin implements IFMLLoadingPlugin {
     public String[] getASMTransformerClass() {
         return new String[] {
                 "team.idealstate.minecraftforge.xray.core.patch.GuiScrollingListPatcher",
+                "team.idealstate.minecraftforge.xray.core.patch.BlockPatcher",
                 "team.idealstate.minecraftforge.xray.core.patch.EntityRendererPatcher",
                 "team.idealstate.minecraftforge.xray.core.patch.WorldRendererPatcher"
         };
