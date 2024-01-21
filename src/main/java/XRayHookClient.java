@@ -17,7 +17,11 @@
  */
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.world.IBlockAccess;
 import team.idealstate.minecraftforge.xray.mod.config.XRayOptions;
 import team.idealstate.minecraftforge.xray.mod.keybinding.EnableXRay;
 
@@ -35,12 +39,25 @@ public abstract class XRayHookClient {
     public static Block xrayBlockRender_WorldRender_updateRenderer(int x, int y, int z, RenderBlocks renderBlocks, Block block) {
         if (EnableXRay.getInstance().isEnabled()){
             if (XRayOptions.getInstance().isExcludeBlock(block.delegate.name())) {
-                renderBlocks.setRenderAllFaces(true);
-                return block;
+                EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+                int distance = XRayOptions.getInstance().getDistance();
+                if (Math.abs(player.posX - x) <= distance &&
+                        Math.abs(player.posY - y) <= distance &&
+                        Math.abs(player.posZ - z) <= distance) {
+                    renderBlocks.setRenderAllFaces(true);
+                    return block;
+                }
             }
             return Block.getBlockById(0);
         }
         return block;
+    }
+
+    public static boolean xrayBlockRender_Block_shouldSideBeRendered(boolean original, IBlockAccess worldIn, int x, int y, int z, int side) {
+        if (EnableXRay.getInstance().isEnabled()) {
+            return true;
+        }
+        return original;
     }
 
     public static boolean xrayNightVision_EntityRenderer_updateLightmap(boolean original) {
