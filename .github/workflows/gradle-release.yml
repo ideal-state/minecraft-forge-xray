@@ -19,12 +19,17 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Set up JDK 8
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: "8"
-          distribution: "temurin"
+          check-latest: true
+          distribution: "zulu"
           server-id: github
           settings-path: ${{ github.workspace }}
+          cache: 'gradle'
+          cache-dependency-path: |
+              **/*.gradle*
+              **/gradle-wrapper.properties
 
       - name: Get current version
         run: |
